@@ -1,0 +1,738 @@
+type: custom:tabbed-card
+options: {}
+styles:
+  "--mdc-theme-primary": null
+  "--mdc-tab-text-label-color-default": grey
+tabs:
+  - attributes:
+      label: null
+      icon: mdi:router-network
+    card:
+      type: custom:vertical-stack-in-card
+      cards:
+        - show_state: true
+          show_name: true
+          camera_view: auto
+          fit_mode: cover
+          type: picture-entity
+          entity: sensor.dream_machine_pro_state
+          name: Dream Machine Pro
+          image:
+            media_content_id: media-source://image_upload/18e7cf31d9af60ddc0bd3342e01bacce
+            media_content_type: image/png
+            metadata:
+              title: udmpro.png
+              thumbnail: /api/image/serve/18e7cf31d9af60ddc0bd3342e01bacce/256x256
+              media_class: image
+              navigateIds:
+                - {}
+                - media_content_type: app
+                  media_content_id: media-source://image_upload
+        - type: custom:button-card
+          variables:
+            internet_state: sensor.internet_monitor_status_2
+            download_state: sensor.speedtest_download
+            upload_state: sensor.speedtest_upload
+            ping_state: sensor.dream_machine_pro_cloudflare_wan_latency
+            download_good_above: 250
+            download_average_above: 200
+            download_poor_below: 150
+            upload_good_above: 50
+            upload_average_above: 30
+            upload_poor_below: 15
+            ping_offline: 1
+            ping_good_below: 25
+            ping_average_below: 40
+            ping_poor_above: 40
+          triggers_update:
+            - "[[[ return variables.internet_state ]]]"
+            - "[[[ return variables.download_state ]]]"
+            - "[[[ return variables.upload_state ]]]"
+            - "[[[ return variables.ping_state ]]]"
+          show_name: false
+          show_state: false
+          show_icon: false
+          styles:
+            card:
+              - padding: 10px
+            grid:
+              - grid-template-areas: "\"left mid right\""
+              - grid-template-columns: .8fr .1fr .8fr
+              - grid-template-rows: 100%
+            custom_fields:
+              left:
+                - filter: opacity(100%)
+                - overflow: visible
+              right:
+                - filter: opacity(100%)
+                - overflow: visible
+          custom_fields:
+            left:
+              card:
+                type: custom:mushroom-template-card
+                entity: "[[[ return variables.internet_state ]]]"
+                icon: |
+                  {% if is_state(entity, "up") %}
+                    mdi:web-check
+                  {% elif is_state(entity, "down") %}
+                    mdi:web-cancel
+                  {% endif %}
+                icon_color: |
+                  {% if is_state(entity, "up") %}
+                    green
+                  {% elif is_state(entity, "down") %}
+                    red
+                  {% endif %}
+                primary: |
+                  {% if is_state(entity, "up") %}
+                    Online
+                  {% elif is_state(entity, "down") %}
+                    DOWN
+                  {% endif %}
+                secondary: Internet Status
+                card_mod:
+                  style: |
+                    ha-card {
+                      padding: 0px !important;
+                      padding-bottom: 3px !important;
+                      text-align: left !important;
+                      border: none !important;
+                      box-shadow: none !important;
+                    }        
+            right:
+              card:
+                type: grid
+                columns: 3
+                square: false
+                cards:
+                  - type: custom:button-card
+                    entity: "[[[ return variables.download_state ]]]"
+                    layout: icon_state
+                    show_name: false
+                    show_state: true
+                    show_label: true
+                    icon: mdi:download-network-outline
+                    label: Mbit/s
+                    size: 100%
+                    state_display: >-
+                      [[[ return
+                      Math.round(Number(states[variables.download_state].state)).toFixed(0);
+                      ]]]
+                    state:
+                      - value: "[[[ return variables.download_good_above ]]]"
+                        operator: ">"
+                        styles:
+                          icon:
+                            - color: green
+                      - value: "[[[ return variables.download_average_above ]]]"
+                        operator: ">="
+                        styles:
+                          icon:
+                            - color: darkorange
+                      - value: "[[[ return variables.download_poor_below ]]]"
+                        operator: <
+                        styles:
+                          icon:
+                            - color: red
+                    styles:
+                      state:
+                        - font-size: 0.7rem
+                        - font-weight: bold
+                      label:
+                        - font-size: 0.7rem
+                      card:
+                        - background: rgba(var(--rgb-primary-text-color), 0.05)
+                        - height: 3rem
+                        - border: none
+                        - box-shadow: none
+                  - type: custom:button-card
+                    entity: "[[[ return variables.upload_state ]]]"
+                    layout: icon_state
+                    show_name: false
+                    show_state: true
+                    show_label: true
+                    icon: mdi:upload-network-outline
+                    label: Mbit/s
+                    size: 100%
+                    state_display: >-
+                      [[[ return
+                      Math.round(Number(states[variables.upload_state].state)).toFixed(0);
+                      ]]]
+                    state:
+                      - value: "[[[ return variables.upload_good_above ]]]"
+                        operator: ">"
+                        styles:
+                          icon:
+                            - color: green
+                      - value: "[[[ return variables.upload_average_above ]]]"
+                        operator: ">="
+                        styles:
+                          icon:
+                            - color: darkorange
+                      - value: "[[[ return variables.upload_poor_below ]]]"
+                        operator: <
+                        styles:
+                          icon:
+                            - color: red
+                    styles:
+                      state:
+                        - font-size: 0.7rem
+                        - font-weight: bold
+                      label:
+                        - font-size: 0.7rem
+                      card:
+                        - background: rgba(var(--rgb-primary-text-color), 0.05)
+                        - height: 3rem
+                        - border: none
+                        - box-shadow: none
+                  - type: custom:button-card
+                    entity: "[[[ return variables.ping_state ]]]"
+                    layout: icon_state
+                    show_name: false
+                    show_state: true
+                    show_label: true
+                    label: ms
+                    size: 100%
+                    state_display: >-
+                      [[[ return
+                      Math.round(Number(states[variables.ping_state].state)).toFixed(0);
+                      ]]]
+                    state:
+                      - value: "[[[ return variables.ping_offline ]]]"
+                        operator: <
+                        styles:
+                          icon:
+                            - color: grey
+                      - value: "[[[ return variables.ping_good_below ]]]"
+                        operator: <
+                        styles:
+                          icon:
+                            - color: green
+                      - value: "[[[ return variables.ping_average_below ]]]"
+                        operator: <=
+                        styles:
+                          icon:
+                            - color: darkorange
+                      - value: "[[[ return variables.ping_poor_above ]]]"
+                        operator: ">"
+                        styles:
+                          icon:
+                            - color: red
+                    styles:
+                      state:
+                        - font-size: 0.7rem
+                        - font-weight: bold
+                      label:
+                        - font-size: 0.7rem
+                      card:
+                        - background: rgba(var(--rgb-primary-text-color), 0.05)
+                        - height: 3rem
+                        - border: none
+                        - box-shadow: none
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:router-network
+          heading: UDM Pro
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/3c45819b3b70032ddd79fda20c95aac3
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.dream_machine_pro_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.dream_machine_pro_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.dream_machine_pro
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Daily Internet -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.daily_internet_in
+              color: accent
+              icon: mdi:download-network
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.daily_internet_out
+              color: accent
+              icon: mdi:upload-network
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.dream_machine_pro_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.dream_machine_pro_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: WAN IP -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.myname_ddns_net
+              color: accent
+              icon: mdi:ip-outline
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Google Latency -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.dream_machine_pro_google_wan_latency
+              color: default
+              icon: null
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Microsoft Latency -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.dream_machine_pro_microsoft_wan_latency
+              color: default
+              icon: null
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Cloudflare Latency -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.dream_machine_pro_cloudflare_wan_latency
+              color: default
+              icon: null
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+      show_header_toggle: false
+      state_color: true
+      title: null
+  - attributes:
+      label: null
+      icon: mdi:switch
+    card:
+      type: custom:vertical-stack-in-card
+      cards:
+        - show_state: false
+          show_name: true
+          camera_view: auto
+          fit_mode: cover
+          type: picture-entity
+          entity: sensor.dream_machine_pro_state
+          image:
+            media_content_id: media-source://image_upload/702154aa5258856a4b3ab5f8be0543b0
+            media_content_type: image/png
+            metadata:
+              title: switch.png
+              thumbnail: /api/image/serve/702154aa5258856a4b3ab5f8be0543b0/256x256
+              media_class: image
+              navigateIds:
+                - {}
+                - media_content_type: app
+                  media_content_id: media-source://image_upload
+          name: Network Switches
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:switch
+          heading: US-24-250W
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/2ccb32521c1c87f9c3bb216220655487
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.ll_us_24_250w_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.ll_us_24_250w_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.ll_us_24_250w
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.ll_us_24_250w_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.ll_us_24_250w_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: PoE Consumption -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.ll_us_24_250w_poe
+              color: accent
+              icon: mdi:transmission-tower-export
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:switch
+          heading: ML-8-60W
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/e1c8ea77b7c85964f279f05038e0aec5
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.ll_u6_lr_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.ll_u6_lr_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.ll_u6_lr
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.ll_u6_lr_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.ll_u6_lr_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:switch
+          heading: Patio-8-60W
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/5be4339b761b665a286e9f52be1215fe
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.patio_8_60w_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.patio_8_60w_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.patio_8_60w
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.patio_8_60w_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.patio_8_60w_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+  - attributes:
+      label: null
+      icon: mdi:access-point-network
+    card:
+      type: custom:vertical-stack-in-card
+      cards:
+        - show_state: false
+          show_name: true
+          camera_view: auto
+          fit_mode: cover
+          type: picture-entity
+          entity: sensor.dream_machine_pro_state
+          image:
+            media_content_id: media-source://image_upload/02f73d1de00f2349a030775892941a28
+            media_content_type: image/png
+            metadata:
+              title: u6lr.png
+              thumbnail: /api/image/serve/02f73d1de00f2349a030775892941a28/256x256
+              media_class: image
+              navigateIds:
+                - {}
+                - media_content_type: app
+                  media_content_id: media-source://image_upload
+          name: Wireless Access Points
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:access-point-network
+          heading: UL-U6_LR
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/eb2143dc67a4af1ce265ceca942a234a
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.ul_u6_lr_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.ul_u6_lr_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.ul_u6_lr
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.ul_u6_lr_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.ul_u6_lr_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:access-point-network
+          heading: LL-U6_LR
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/93e777a0ba52f2b17848441112bd14f2
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.ll_u6_lr_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.ll_u6_lr_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.ll_u6_lr
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.ll_u6_lr_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.ll_u6_lr_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:access-point-network
+          heading: Garage-U6_LR
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/578cd074e5d307ecb5c4a225effc80e8
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.garage_u6_lr_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.garage_u6_lr_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.garage_u6_lr
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.garage_u6_lr_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.garage_u6_lr_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:access-point-network
+          heading: Patio-IW-HD
+          heading_style: title
+          tap_action:
+            action: navigate
+            navigation_path: /config/devices/device/78c5eb1691d0d5993389a4480e8e8a91
+            data: {}
+            confirmation:
+              text: Do you want to view the device details?
+          badges:
+            - type: entity
+              entity: sensor.patio_iw_hd_cpu_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: sensor.patio_iw_hd_memory_utilization
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: update.patio_iw_hd
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              entity: sensor.patio_iw_hd_uptime
+              color: null
+              tap_action:
+                action: more-info
+            - type: entity
+              entity: button.patio_iw_hd_restart
+              show_state: false
+              show_icon: true
+              color: accent
+              name: Restart
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
