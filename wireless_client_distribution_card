@@ -1,0 +1,188 @@
+type: custom:vertical-stack-in-card
+cards:
+  - type: custom:mushroom-title-card
+    title: Wireless Client Distribution
+    alignment: center
+  - type: custom:gap-card
+    height: 15
+  - type: custom:gap-card
+    height: 5
+  - square: false
+    type: grid
+    cards:
+      - type: heading
+        icon: mdi:access-point-network
+        heading: UL-U6-LR --->
+        heading_style: title
+      - type: custom:badge-horizontal-container-card
+        badges:
+          - type: custom:modern-circular-gauge-badge
+            entity: sensor.ul_u6_lr_clients
+            max: 100
+            show_seconds: false
+            segments:
+              - from: 1
+                color:
+                  - 86
+                  - 251
+                  - 89
+              - from: 10
+                color:
+                  - 212
+                  - 255
+                  - 0
+              - from: 20
+                color:
+                  - 255
+                  - 174
+                  - 0
+              - color:
+                  - 255
+                  - 115
+                  - 0
+                from: 30
+              - from: 40
+                color:
+                  - 255
+                  - 51
+                  - 0
+              - from: 50
+                color:
+                  - 255
+                  - 0
+                  - 0
+        badges_align: right
+      - type: heading
+        icon: mdi:access-point-network
+        heading: LL-U6-LR --->
+        heading_style: title
+      - type: custom:badge-horizontal-container-card
+        badges:
+          - type: custom:modern-circular-gauge-badge
+            entity: sensor.ll_u6_lr_clients
+            max: 100
+            show_seconds: false
+            segments:
+              - from: 1
+                color:
+                  - 86
+                  - 251
+                  - 89
+              - from: 10
+                color:
+                  - 212
+                  - 255
+                  - 0
+              - from: 20
+                color:
+                  - 255
+                  - 174
+                  - 0
+              - color:
+                  - 255
+                  - 115
+                  - 0
+                from: 30
+              - from: 40
+                color:
+                  - 255
+                  - 51
+                  - 0
+              - from: 50
+                color:
+                  - 255
+                  - 0
+                  - 0
+        badges_align: right
+      - type: heading
+        icon: mdi:access-point-network
+        heading: Garage-U6-LR --->
+        heading_style: title
+      - type: custom:badge-horizontal-container-card
+        badges:
+          - type: custom:modern-circular-gauge-badge
+            entity: sensor.garage_u6_lr_clients
+            max: 100
+            show_seconds: false
+            segments:
+              - from: 1
+                color:
+                  - 86
+                  - 251
+                  - 89
+              - from: 10
+                color:
+                  - 212
+                  - 255
+                  - 0
+              - from: 20
+                color:
+                  - 255
+                  - 174
+                  - 0
+              - color:
+                  - 255
+                  - 115
+                  - 0
+                from: 30
+              - from: 40
+                color:
+                  - 255
+                  - 51
+                  - 0
+              - from: 50
+                color:
+                  - 255
+                  - 0
+                  - 0
+        badges_align: right
+      - type: heading
+        icon: mdi:access-point-network
+        heading: Patio-IW-HD --->
+        heading_style: title
+      - type: custom:badge-horizontal-container-card
+        badges:
+          - type: custom:modern-circular-gauge-badge
+            entity: sensor.patio_iw_hd_clients
+            max: 100
+            show_seconds: false
+            segments:
+              - from: 1
+                color:
+                  - 86
+                  - 251
+                  - 89
+              - from: 10
+                color:
+                  - 212
+                  - 255
+                  - 0
+              - from: 20
+                color:
+                  - 255
+                  - 174
+                  - 0
+              - color:
+                  - 255
+                  - 115
+                  - 0
+                from: 30
+              - from: 40
+                color:
+                  - 255
+                  - 51
+                  - 0
+              - from: 50
+                color:
+                  - 255
+                  - 0
+                  - 0
+        badges_align: right
+    columns: 2
+  - type: custom:gap-card
+    height: 15
+  - graph: line
+    type: sensor
+    entity: sensor.total_wireless_clients
+    detail: 2
+    theme: arcticForest_dark_alt-accent_steel-blue
