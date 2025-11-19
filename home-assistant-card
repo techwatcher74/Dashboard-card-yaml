@@ -1,0 +1,589 @@
+type: custom:tabbed-card
+options: {}
+styles:
+  "--mdc-theme-primary": null
+  "--mdc-tab-text-label-color-default": grey
+tabs:
+  - attributes:
+      label: null
+      icon: mdi:home-assistant
+    card:
+      type: custom:vertical-stack-in-card
+      cards:
+        - show_state: true
+          show_name: true
+          camera_view: auto
+          fit_mode: cover
+          type: picture-entity
+          entity: sensor.dream_machine_pro_state
+          image:
+            media_content_id: media-source://image_upload/47b7317750bac968147ded39a193a5e0
+            media_content_type: image/png
+          name: Home Assistant Server
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:home-assistant
+          heading: Home Assistant
+          heading_style: title
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: input_button.home_button
+              name: 16 GB
+              icon: mdi:memory
+              state_content: name
+              color: primary
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: input_button.home_button
+              name: 256 GB
+              icon: mdi:harddisk
+              state_content: name
+              color: primary
+        - type: heading
+          icon: ""
+          heading: RAM and CPU
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.processor_use
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.memory_use_percent
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Storage
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.home_assistant_host_disk_used
+              name: used
+              icon: mdi:harddisk
+              color: accent
+              state_content:
+                - name
+                - state
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: null
+          heading: Home Assistant Core
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.home_assistant_core_cpu_percent
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.home_assistant_core_memory_percent
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Home Assistant Supervisor
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.home_assistant_supervisor_cpu_percent
+              color: accent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.home_assistant_supervisor_memory_percent
+              color: accent
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: null
+          heading: Home Assistant OS
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: false
+              entity: sensor.home_assistant_operating_system_version
+              name: version
+              color: accent
+              state_content:
+                - name
+                - state
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Last Restart -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: sensor.last_boot
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
+      show_header_toggle: false
+      state_color: true
+      title: null
+  - attributes:
+      label: null
+      icon: mdi:folder-plus-outline
+    card:
+      type: custom:vertical-stack-in-card
+      cards:
+        - type: custom:gap-card
+          height: 5
+        - type: heading
+          icon: mdi:home-assistant
+          heading: Add-ons
+          heading_style: title
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: BWA Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.bwalink_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: BWA resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.bwalink_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.bwalink_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Chrony Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.chrony_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Chrony resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.chrony_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.chrony_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: ESPHome Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.esphome_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: ESPHome resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.esphome_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.esphome_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: eWeLink Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.ewelink_smart_home_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: eWeLink resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.ewelink_smart_home_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.ewelink_smart_home_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: G-Drive Backup Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.home_assistant_google_drive_backup_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: G-Drive Backup resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.home_assistant_google_drive_backup_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.home_assistant_google_drive_backup_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Matter Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.matter_server_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Matter resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.matter_server_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.matter_server_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Mosquitto Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.mosquitto_broker_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Mosquitto resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.mosquitto_broker_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.mosquitto_broker_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Samba Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.samba_share_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Samba resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.samba_share_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.samba_share_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Speedtest Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.speedtest_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Speedtest resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.speedtest_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.speedtest_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Studio Code Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.studio_code_server_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Studio Code resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.studio_code_server_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.studio_code_server_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: SSH Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.terminal_ssh_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: SSH resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.terminal_ssh_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.terminal_ssh_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Uptime Kuma Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.uptime_kuma_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Uptime Kuma resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.uptime_kuma_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.uptime_kuma_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: heading
+          icon: ""
+          heading: Z-Wave Add-on -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              entity: binary_sensor.z_wave_js_running
+              tap_action:
+                action: more-info
+        - type: heading
+          icon: ""
+          heading: Z-Wave resources -->
+          heading_style: subtitle
+          badges:
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.z_wave_js_cpu_percent
+              tap_action:
+                action: more-info
+            - type: entity
+              show_state: true
+              show_icon: true
+              color: accent
+              entity: sensor.z_wave_js_memory_percent
+              tap_action:
+                action: more-info
+        - type: custom:gap-card
+          height: 15
+        - type: custom:gap-card
+          height: 5
