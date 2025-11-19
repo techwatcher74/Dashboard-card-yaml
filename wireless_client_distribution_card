@@ -5,8 +5,6 @@ cards:
     alignment: center
   - type: custom:gap-card
     height: 15
-  - type: custom:gap-card
-    height: 5
   - square: false
     type: grid
     cards:
@@ -51,6 +49,14 @@ cards:
                   - 255
                   - 0
                   - 0
+          - type: custom:hui-entity-badge
+            show_name: false
+            show_state: false
+            show_icon: true
+            entity: button.ul_u6_lr_restart
+            color: accent
+            tap_action:
+              action: more-info
         badges_align: right
       - type: heading
         icon: mdi:access-point-network
@@ -93,6 +99,12 @@ cards:
                   - 255
                   - 0
                   - 0
+          - type: custom:hui-entity-badge
+            show_name: false
+            show_state: false
+            show_icon: true
+            entity: button.ll_u6_lr_restart
+            color: accent
         badges_align: right
       - type: heading
         icon: mdi:access-point-network
@@ -135,6 +147,12 @@ cards:
                   - 255
                   - 0
                   - 0
+          - type: custom:hui-entity-badge
+            show_name: false
+            show_state: false
+            show_icon: true
+            entity: button.garage_u6_lr_restart
+            color: accent
         badges_align: right
       - type: heading
         icon: mdi:access-point-network
@@ -177,6 +195,12 @@ cards:
                   - 255
                   - 0
                   - 0
+          - type: custom:hui-entity-badge
+            show_name: false
+            show_state: false
+            show_icon: true
+            entity: button.patio_8_60w_restart
+            color: accent
         badges_align: right
     columns: 2
   - type: custom:gap-card
